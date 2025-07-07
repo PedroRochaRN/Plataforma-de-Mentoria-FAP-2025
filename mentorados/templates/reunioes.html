@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'body' %}
+<header class="bg-gray-900">
+  <nav class="flex items-center justify-between p-4 lg:px-8" aria-label="Global">
+    <div class="flex lg:flex-1">
+      <a href="#" class="-m-1.5 p-1.5">
+        <span class="sr-only">Your Company</span>
+        <img class="h-8 w-auto" src="{% static 'logo.png' %}" alt="">
+      </a>
+    </div>
+    <div class="flex lg:hidden">
+      <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400">
+        <span class="sr-only">Open main menu</span>
+        <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+    </div>
+    <div class="hidden lg:flex lg:gap-x-12">
+      <a href="{% url 'mentorados' %}" class="text-sm/6 font-semibold text-gray-100">Mentorados</a>
+      <a href="{% url 'reunioes' %}" class="text-sm/6 font-semibold text-gray-100">Reuniões</a>
+    </div>
+    <div class="hidden lg:flex lg:flex-1 lg:justify-end"></div>
+  </nav>
+</header>
+
+<div class="min-h-screen bg-gray-900">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Header melhorado -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-white mb-4">
+        Gerenciar Reuniões
+      </h1>
+      <div class="w-24 h-1 bg-pink-500 mx-auto rounded-full"></div>
+      <p class="text-gray-400 mt-4">Abra novos horários e visualize suas reuniões agendadas</p>
+    </div>
+
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        
+        <!-- Seção de Abrir Horário -->
+        <div>
+          <div class="bg-white rounded-2xl shadow-2xl border border-gray-700 overflow-hidden">
+            <!-- Header do card -->
+            <div class="bg-gradient-to-r from-pink-500 to-pink-600 p-6">
+              <div class="flex items-center">
+                <div class="bg-white bg-opacity-20 rounded-full p-3 mr-4">
+                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h2 class="text-xl font-semibold text-white">Novo Horário</h2>
+                  <p class="text-pink-100 text-sm">Abra um horário para reunião</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Formulário -->
+            <div class="p-8">
+              {% if messages %}
+                {% for message in messages %}
+                  <div class="rounded-xl bg-pink-50 border border-pink-200 p-4 mb-6">
+                    <div class="flex items-start">
+                      <svg class="w-5 h-5 text-pink-500 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                      </svg>
+                      <p class="text-pink-700 text-sm">{{ message }}</p>
+                    </div>
+                  </div>
+                {% endfor %}
+              {% endif %}
+
+              <form action="{% url 'reunioes' %}" method="POST" class="space-y-6">
+                {% csrf_token %}
+                
+                <!-- Campo Data -->
+                <div class="space-y-2">
+                  <label for="date" class="flex items-center text-sm font-semibold text-gray-700">
+                    <svg class="w-4 h-4 mr-2 text-pink-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                    </svg>
+                    Data e Horário
+                  </label>
+                  <input type="datetime-local" name="data" id="date" required class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 transition-all duration-300 bg-gray-50 hover:bg-white text-gray-700 font-medium">
+                </div>
+
+                <!-- Botão de envio -->
+                <button type="submit" class="w-full bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center">
+                  <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                  </svg>
+                  Abrir Horário
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Seção de Reuniões -->
+        <div>
+          <div class="bg-white rounded-2xl shadow-2xl border border-gray-700 overflow-hidden">
+            <!-- Header do card -->
+            <div class="bg-gradient-to-r from-pink-500 to-pink-600 p-6">
+              <div class="flex items-center">
+                <div class="bg-white bg-opacity-20 rounded-full p-3 mr-4">
+                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h2 class="text-xl font-semibold text-white">Reuniões Agendadas</h2>
+                  <p class="text-pink-100 text-sm">Visualize suas reuniões confirmadas</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lista de reuniões -->
+            <div class="p-6">
+              {% if reunioes %}
+                <ul role="list" class="divide-y divide-gray-200 space-y-3">
+                  {% for reuniao in reunioes %}
+                  <li class="flex justify-between gap-x-6 py-5 px-4 rounded-xl hover:bg-gray-50 transition-all duration-300">
+                    <div class="flex min-w-0 gap-x-4">
+                      <img class="size-12 flex-none rounded-full bg-gray-200 ring-2 ring-pink-200" src="{{reuniao.mentorado.foto.url}}" alt="">
+                      <div class="min-w-0 flex-auto">
+                        <p class="text-sm font-semibold text-gray-900">{{reuniao.mentorado.nome}}</p>
+                        <p class="mt-1 truncate text-xs text-gray-500">{{reuniao.descricao}}</p>
+                      </div>
+                    </div>
+                    <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                      <p class="text-sm text-gray-900 font-medium">{{reuniao.data_formatada}}</p>
+                      <div class="mt-1 flex items-center">
+                        <div class="w-2 h-2 bg-pink-500 rounded-full mr-2"></div>
+                        <p class="text-xs text-gray-500">Confirmada</p>
+                      </div>
+                    </div>
+                  </li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <div class="text-center py-12">
+                  <svg class="w-12 h-12 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  </svg>
+                  <p class="text-gray-500 text-sm">Nenhuma reunião agendada ainda</p>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seção de ajuda -->
+    <div class="mt-16 text-center">
+      <div class="bg-white rounded-xl shadow-sm p-6 max-w-xl mx-auto border border-gray-200">
+        <div class="flex items-center justify-center mb-3">
+          <svg class="w-5 h-5 text-pink-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
+          </svg>
+          <span class="font-medium text-gray-800">Precisa de ajuda?</span>
+        </div>
+        <p class="text-gray-600 text-sm">
+          Em caso de dúvidas sobre o gerenciamento de reuniões, entre em contato conosco através do suporte.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Animações suaves para os campos do formulário */
+  input:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 25px rgba(236, 72, 153, 0.1);
+  }
+  
+  /* Hover effect para os campos */
+  .hover\:bg-white:hover {
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Animação do botão principal */
+  button[type="submit"]:hover {
+    transform: scale(1.02) translateY(-1px);
+  }
+
+  /* Hover effect para os itens da lista */
+  li:hover {
+    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.1);
+  }
+</style>
+
+{% endblock 'body' %}

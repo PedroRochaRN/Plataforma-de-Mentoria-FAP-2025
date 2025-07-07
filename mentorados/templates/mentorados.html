@@ -1,0 +1,1117 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'body' %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MentorBook - Cadastro de Mentorados</title>
+    
+    <!-- Material-UI CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/14.0.0/material-components-web.min.css" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #040e1b;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background-color: #1e293b;
+            padding: 16px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .nav-container {
+            width: 100%;
+            max-width: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 0 0 auto;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            flex: 0 0 auto;
+        }
+        
+        .nav-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+        }
+        
+        .mobile-menu {
+            display: none;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 20px;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+        
+        .form-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .chart-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .chart-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #ffffff;
+            text-align: center;
+        }
+        
+        .form-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: #ffffff;
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .field-description {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+        
+        .mdc-text-field {
+            width: 100%;
+            margin-bottom: 16px;
+        }
+        
+        .mdc-text-field--filled {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .mdc-text-field--filled .mdc-text-field__input {
+            color: #ffffff;
+        }
+        
+        .mdc-text-field--filled .mdc-floating-label {
+            color: #cbd5e1;
+        }
+        
+        .mdc-text-field--filled .mdc-floating-label--float-above {
+            color: #3b82f6;
+        }
+        
+        .mdc-text-field--filled .mdc-line-ripple::before,
+        .mdc-text-field--filled .mdc-line-ripple::after {
+            border-bottom-color: #3b82f6;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .file-input-container {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .file-input-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #cbd5e1;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .file-input {
+            width: 100%;
+            padding: 12px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+        
+        .file-input:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+        
+        .file-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+        
+        .mdc-select {
+            width: 100%;
+            margin-bottom: 16px;
+        }
+        
+        .mdc-select--filled .mdc-select__anchor {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .mdc-select--filled .mdc-select__selected-text {
+            color: #ffffff;
+        }
+        
+        .mdc-select--filled .mdc-floating-label {
+            color: #cbd5e1;
+        }
+        
+        .mdc-select .mdc-list {
+            background-color: #1e293b;
+        }
+        
+        .mdc-select .mdc-list-item {
+            color: #ffffff;
+        }
+        
+        .mdc-select .mdc-list-item:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        
+        .mdc-button--raised {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: #ffffff;
+            width: 100%;
+            margin-top: 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .mdc-button--raised:hover {
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .table-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .table-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #ffffff;
+        }
+        
+        .mentees-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .mentees-table th,
+        .mentees-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .mentees-table th {
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+        
+        .mentees-table td {
+            color: #cbd5e1;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #374151;
+            object-fit: cover;
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 8px;
+            border-radius: 16px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .status-badge:hover {
+            transform: scale(1.05);
+        }
+        
+        .status-badge.ativo {
+            background-color: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+        
+        .status-badge.inativo {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        
+        .status-badge.pausado {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+        
+        .status-badge.ativo .status-dot {
+            background-color: #22c55e;
+        }
+        
+        .status-badge.inativo .status-dot {
+            background-color: #ef4444;
+        }
+        
+        .status-badge.pausado .status-dot {
+            background-color: #f59e0b;
+        }
+        
+        .objective-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            background-color: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .alert {
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            display: none;
+        }
+        
+        .alert.success {
+            background-color: rgba(34, 197, 94, 0.1);
+            border: 1px solid #22c55e;
+            color: #22c55e;
+        }
+        
+        .alert.error {
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            color: #ef4444;
+        }
+        
+        .django-messages {
+            margin-bottom: 16px;
+        }
+        
+        .django-messages .message {
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .django-messages .message.success {
+            background-color: rgba(34, 197, 94, 0.1);
+            border: 1px solid #22c55e;
+            color: #22c55e;
+        }
+        
+        .django-messages .message.error {
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            color: #ef4444;
+        }
+        
+        .django-messages .message.warning {
+            background-color: rgba(245, 158, 11, 0.1);
+            border: 1px solid #f59e0b;
+            color: #f59e0b;
+        }
+        
+        .django-messages .message.info {
+            background-color: rgba(59, 130, 246, 0.1);
+            border: 1px solid #3b82f6;
+            color: #3b82f6;
+        }
+        
+        .status-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+        
+        .status-modal-content {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            margin: 15% auto;
+            padding: 24px;
+            border-radius: 12px;
+            width: 300px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #ffffff;
+            text-align: center;
+        }
+        
+        .status-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .status-option {
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .status-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .status-option.ativo {
+            background-color: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+        }
+        
+        .status-option.inativo {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+        
+        .status-option.pausado {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+        }
+        
+        .close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close-modal:hover {
+            color: #ffffff;
+        }
+        
+        @media (max-width: 1024px) {
+            .nav-container {
+                padding: 0 20px;
+            }
+            
+            .nav-links {
+                gap: 24px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .nav-links.mobile-open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: #1e293b;
+                padding: 20px;
+                z-index: 1000;
+                gap: 16px;
+            }
+            
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .mentees-table {
+                font-size: 14px;
+            }
+            
+            .mentees-table th,
+            .mentees-table td {
+                padding: 8px 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 6C4 4.89543 4.89543 4 6 4H14L20 10V18C20 19.1046 19.1046 20 18 20H6C4.89543 20 4 19.1046 4 18V6Z" fill="white"/>
+                        <path d="M14 4V10H20" stroke="#040e1b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 12H16" stroke="#040e1b" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M8 16H16" stroke="#040e1b" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <span class="logo-text">MentorBook</span>
+            </div>
+            <button class="mobile-menu" id="mobileMenuBtn">
+                <span class="material-icons">menu</span>
+            </button>
+            <div class="nav-links" id="navLinks">
+                <a href="{% url 'mentorados' %}">Mentorados</a>
+                <a href="{% url 'reunioes' %}">Reuniões</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-container">
+        <div class="grid-container">
+            <div class="form-section">
+                <h2 class="form-title">Cadastre seus mentorados</h2>
+                
+                <!-- Django Messages -->
+                {% if messages %}
+                    <div class="django-messages">
+                        {% for message in messages %}
+                            <div class="message {{message.tags}}">
+                                {{message}}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
+                <div id="alert" class="alert"></div>
+                
+                <form action="{% url 'mentorados' %}" method="POST" enctype="multipart/form-data" id="menteeForm">
+                    {% csrf_token %}
+                    
+                    <div class="mdc-text-field mdc-text-field--filled">
+                        <span class="mdc-text-field__ripple"></span>
+                        <span class="mdc-floating-label" id="nome-label">Nome</span>
+                        <input class="mdc-text-field__input" type="text" id="nome" name="nome" required>
+                        <span class="mdc-line-ripple"></span>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="file-input-container">
+                            <label for="foto" class="file-input-label">Foto</label>
+                            <input type="file" id="foto" name="foto" accept="image/*" required class="file-input">
+                        </div>
+                        
+                        <div>
+                            <div class="field-description">
+                                Qual é o seu objetivo nesta plataforma de mentoria?
+                            </div>
+                            <div class="mdc-text-field mdc-text-field--filled">
+                                <span class="mdc-text-field__ripple"></span>
+                                <span class="mdc-floating-label" id="objetivo-label">Objetivo</span>
+                                <input class="mdc-text-field__input" type="text" id="objetivo" name="objetivo" required 
+                                       placeholder="Ex: Evoluir em tal área">
+                                <span class="mdc-line-ripple"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="mdc-select mdc-select--filled">
+                            <div class="mdc-select__anchor">
+                                <span class="mdc-select__ripple"></span>
+                                <span class="mdc-floating-label">Navigator</span>
+                                <span class="mdc-select__selected-text-container">
+                                    <span class="mdc-select__selected-text"></span>
+                                </span>
+                                <span class="mdc-select__dropdown-icon">
+                                    <span class="material-icons">arrow_drop_down</span>
+                                </span>
+                                <span class="mdc-line-ripple"></span>
+                            </div>
+                            <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-menu-surface--fullwidth">
+                                <ul class="mdc-list" id="navigatorList">
+                                    {% for navigator in navigators %}
+                                    <li class="mdc-list-item" data-value="{{navigator.id}}">
+                                        <span class="mdc-list-item__ripple"></span>
+                                        <span class="mdc-list-item__text">{{navigator.nome}}</span>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <select name="navigator" id="navigator" style="display: none;" required>
+                                <option value="">Selecione um Navigator</option>
+                                {% for navigator in navigators %}
+                                    <option value="{{navigator.id}}">{{navigator.nome}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="mdc-select mdc-select--filled">
+                            <div class="mdc-select__anchor">
+                                <span class="mdc-select__ripple"></span>
+                                <span class="mdc-floating-label">Status Inicial</span>
+                                <span class="mdc-select__selected-text-container">
+                                    <span class="mdc-select__selected-text"></span>
+                                </span>
+                                <span class="mdc-select__dropdown-icon">
+                                    <span class="material-icons">arrow_drop_down</span>
+                                </span>
+                                <span class="mdc-line-ripple"></span>
+                            </div>
+                            <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-menu-surface--fullwidth">
+                                <ul class="mdc-list">
+                                    <li class="mdc-list-item" data-value="ativo">
+                                        <span class="mdc-list-item__ripple"></span>
+                                        <span class="mdc-list-item__text">Ativo</span>
+                                    </li>
+                                    <li class="mdc-list-item" data-value="inativo">
+                                        <span class="mdc-list-item__ripple"></span>
+                                        <span class="mdc-list-item__text">Inativo</span>
+                                    </li>
+                                    <li class="mdc-list-item" data-value="pausado">
+                                        <span class="mdc-list-item__ripple"></span>
+                                        <span class="mdc-list-item__text">Pausado</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <select name="status" id="status" style="display: none;" required>
+                                <option value="">Selecione um Status</option>
+                                <option value="ativo">Ativo</option>
+                                <option value="inativo">Inativo</option>
+                                <option value="pausado">Pausado</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button class="mdc-button mdc-button--raised" type="submit">
+                        <span class="mdc-button__ripple"></span>
+                        <span class="mdc-button__label">Cadastrar</span>
+                    </button>
+                </form>
+            </div>
+            
+            <div class="chart-section">
+                <h3 class="chart-title">Status dos Mentorados</h3>
+                <canvas id="myChart" width="300" height="300"></canvas>
+            </div>
+        </div>
+        
+        <div class="table-section">
+            <h3 class="table-title">Seus mentorados</h3>
+            <table class="mentees-table">
+                <thead>
+                    <tr>
+                        <th>Usuário</th>
+                        <th>Objetivo/Estágio</th>
+                        <th>Status</th>
+                        <th>Data entrada</th>
+                        <th>Navigator</th>
+                    </tr>
+                </thead>
+                <tbody id="menteesTableBody">
+                    {% for mentorado in mentorados %}
+                    <tr data-mentee-id="{{ mentorado.id }}">
+                        <td>
+                            <div class="user-info">
+                                {% if mentorado.foto %}
+                                    <img src="{{ mentorado.foto.url }}" alt="Avatar" class="user-avatar">
+                                {% else %}
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMzNzQxNTEiLz4KPC9zdmc+" alt="Avatar" class="user-avatar">
+                                {% endif %}
+                                <span><a href="{% url 'tarefa' mentorado.id %}">{{ mentorado.nome }}</a></span>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="objective-badge">{{ mentorado.estagio|truncatechars:30 }}</span>
+                        </td>
+                        <td>
+                            <div class="status-badge {{ mentorado.status|default:'ativo' }}" onclick="openStatusModal('{{ mentorado.id }}', '{{ mentorado.nome }}', '{{ mentorado.status|default:'ativo' }}')">
+                                <span class="status-dot"></span>
+                                <span class="status-text">
+                                    {% if mentorado.status == 'ativo' or not mentorado.status %}
+                                        Ativo
+                                    {% elif mentorado.status == 'inativo' %}
+                                        Inativo
+                                    {% elif mentorado.status == 'pausado' %}
+                                        Pausado
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </td>
+                        <td>{{ mentorado.criado_em|date:"d/m/Y" }}</td>
+                        <td>{{ mentorado.navigator.nome }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: #9ca3af;">
+                            Nenhum mentorado cadastrado ainda
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Modal para alterar status -->
+    <div id="statusModal" class="status-modal">
+        <div class="status-modal-content">
+            <span class="close-modal" onclick="closeStatusModal()">&times;</span>
+            <h3 class="modal-title">Alterar Status</h3>
+            <p id="modalMenteeName" style="text-align: center; color: #cbd5e1; margin-bottom: 16px;"></p>
+            <div class="status-options">
+                <div class="status-option ativo" onclick="changeStatus('ativo')">
+                    <span class="status-dot"></span>
+                    <span>Ativo</span>
+                </div>
+                <div class="status-option inativo" onclick="changeStatus('inativo')">
+                    <span class="status-dot"></span>
+                    <span>Inativo</span>
+                </div>
+                <div class="status-option pausado" onclick="changeStatus('pausado')">
+                    <span class="status-dot"></span>
+                    <span>Pausado</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Material-UI JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/14.0.0/material-components-web.min.js"></script>
+    
+    <script>
+
+        // Essas variáveis vão armazenar informações do mentorado selecionado no modal
+        let currentMenteeId = null;     // ID do mentorado atual
+        let currentMenteeName = null;   // Nome do mentorado atual
+        let currentStatus = null;       // Status atual do mentorado (ativo, inativo ou pausado)
+        let statusChart = null;         // Referência ao gráfico de status (será inicializado depois)
+
+        
+        // -------------------- COMPONENTES DE INTERFACE DO MATERIAL DESIGN --------------------
+        // Ativa os efeitos e funcionalidades nos campos de texto estilizados com o Material Design
+        const textFields = document.querySelectorAll('.mdc-text-field');
+        textFields.forEach(textField => {
+            mdc.textField.MDCTextField.attachTo(textField);
+        });
+
+        // Inicializa os selects personalizados e sincroniza com os selects reais escondidos
+        const selects = document.querySelectorAll('.mdc-select');
+        const selectComponents = []; // Guarda os componentes MDCSelect para futuras referências
+
+        selects.forEach(select => {
+            const selectComponent = mdc.select.MDCSelect.attachTo(select); // Inicializa o componente visual
+            selectComponents.push(selectComponent);
+
+            // Toda vez que o usuário escolher um valor, ele atualiza o <select> escondido (que será enviado no form)
+            selectComponent.listen('MDCSelect:change', () => {
+                const selectElement = select.querySelector('select');
+                if (selectElement) {
+                    selectElement.value = selectComponent.value;
+                    console.log('Selecionado:', selectElement.name, selectComponent.value);
+                }
+         });
+    });
+
+        // Aplica o efeito "ripple" (ondinha de clique) nos botões do Material Design
+        const buttons = document.querySelectorAll('.mdc-button');
+        buttons.forEach(button => {
+            mdc.ripple.MDCRipple.attachTo(button);
+        });
+
+        // --------------------------- FUNÇÃO DE CÁLCULO DE ESTATÍSTICAS ---------------------------
+        function calculateMenteeStats() {
+        // Seleciona todas as linhas de mentorados visíveis
+            const rows = document.querySelectorAll('#menteesTableBody tr[data-mentee-id]');
+
+            // Objeto que irá contar quantos estão em cada status
+            const stats = {
+                ativo: 0,
+                inativo: 0,
+                pausado: 0
+            };
+
+            // Para cada linha (mentorado), verifica a classe e soma na categoria correspondente
+            rows.forEach(row => {
+                const statusBadge = row.querySelector('.status-badge');
+
+                if (statusBadge.classList.contains('ativo')) {
+                    stats.ativo++;
+                } else if (statusBadge.classList.contains('inativo')) {
+                    stats.inativo++;
+                } else if (statusBadge.classList.contains('pausado')) {
+                    stats.pausado++;
+                }
+            });
+
+            return stats; // Retorna o objeto com os totais para o gráfico
+}
+
+
+        // --------------------------- FUNÇÃO DE ATUALIZAÇÃO DO GRÁFICO ---------------------------
+        function updateChart() {
+            // Obtém os valores atualizados (após alguma alteração de status)
+            const stats = calculateMenteeStats();
+
+            if (statusChart) {
+            // Atualiza os dados do gráfico com os novos valores
+                statusChart.data.datasets[0].data = [stats.ativo, stats.inativo, stats.pausado];
+                statusChart.update(); // Atualiza o gráfico na tela
+            }
+        }
+
+
+        // --------------------------- INICIALIZAÇÃO DO GRÁFICO ---------------------------
+        // Pega o contexto do canvas para desenhar o gráfico
+        const ctx = document.getElementById('myChart').getContext('2d');
+
+        // Calcula as estatísticas iniciais ao carregar a página
+        const initialStats = calculateMenteeStats();
+
+        // Cria o gráfico de rosca usando Chart.js
+        statusChart = new Chart(ctx, {
+            type: 'doughnut', // Tipo: rosca (doughnut)
+            data: {
+                labels: ['Ativos', 'Inativos', 'Pausados'], // Nomes das fatias
+                datasets: [{
+                    data: [initialStats.ativo, initialStats.inativo, initialStats.pausado], // Dados de cada fatia
+                    backgroundColor: [ // Cores personalizadas para cada status
+                        '#22c55e', // Verde para Ativo
+                        '#ef4444', // Vermelho para Inativo
+                        '#f59e0b'  // Amarelo para Pausado
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 4 // Quando passar o mouse, a fatia destaca levemente
+                }]
+            },
+            options: {
+                responsive: true, // Adapta ao tamanho da tela
+                maintainAspectRatio: true, // Mantém proporções do gráfico
+                plugins: {
+                    legend: {
+                        position: 'bottom', // Coloca a legenda embaixo
+                        labels: {
+                            color: '#ffffff', // Cor do texto da legenda
+                            padding: 20,
+                            usePointStyle: true,
+                            pointStyle: 'circle' // Usar círculos na legenda
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)', // Cor do fundo da dica de ferramenta
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        borderColor: 'rgba(255, 255, 255, 0.1)',
+                        borderWidth: 1,
+                        callbacks: {
+                            // Formata a exibição da dica (exibe quantidade e porcentagem)
+                            label: function (context) {
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0); // Soma todos os dados
+                                const percentage = total > 0 ? ((context.parsed * 100) / total).toFixed(1) : 0; // Calcula a % da fatia atual
+                                return `${context.label}: ${context.parsed} (${percentage}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+/*
+🎯 Esse bloco de código é responsável por:
+- Inicializar os componentes do Material Design (inputs, selects e botões)
+- Contar quantos mentorados estão em cada status (ativo, inativo ou pausado)
+- Criar e manter um gráfico de rosca sempre atualizado com base nesses dados
+*/
+
+
+
+
+        // Funções do modal
+        function openStatusModal(menteeId, menteeName, currentStatusValue) {
+            currentMenteeId = menteeId;
+            currentMenteeName = menteeName;
+            currentStatus = currentStatusValue;
+            
+            document.getElementById('modalMenteeName').textContent = `Mentorado: ${menteeName}`;
+            document.getElementById('statusModal').style.display = 'block';
+        }
+
+        function closeStatusModal() {
+            document.getElementById('statusModal').style.display = 'none';
+            currentMenteeId = null;
+            currentMenteeName = null;
+            currentStatus = null;
+        }
+
+        function changeStatus(newStatus) {
+            if (!currentMenteeId) return;
+            
+            // Simular mudança no frontend (em produção, você faria uma requisição AJAX)
+            const row = document.querySelector(`tr[data-mentee-id="${currentMenteeId}"]`);
+            if (row) {
+                const statusBadge = row.querySelector('.status-badge');
+                const statusText = row.querySelector('.status-text');
+                
+                // Remover classes de status anteriores
+                statusBadge.classList.remove('ativo', 'inativo', 'pausado');
+                
+                // Adicionar nova classe de status
+                statusBadge.classList.add(newStatus);
+                
+                // Atualizar texto do status
+                const statusTexts = {
+                    'ativo': 'Ativo',
+                    'inativo': 'Inativo',
+                    'pausado': 'Pausado'
+                };
+                statusText.textContent = statusTexts[newStatus];
+                
+                // Atualizar atributo onclick
+                statusBadge.setAttribute('onclick', `openStatusModal('${currentMenteeId}', '${currentMenteeName}', '${newStatus}')`);
+                
+                // Atualizar gráfico
+                updateChart();
+                
+                // Mostrar feedback
+                showAlert(`Status do mentorado ${currentMenteeName} alterado para ${statusTexts[newStatus]}!`, 'success');
+                
+                // Aqui você adicionaria a requisição AJAX para salvar no backend
+                updateMenteeStatus(currentMenteeId, newStatus);
+                
+                console.log(`Status do mentorado ${currentMenteeId} alterado para: ${newStatus}`);
+            }
+            
+            closeStatusModal();
+        }
+
+        // Função para atualizar status no backend (exemplo)
+        function updateMenteeStatus(menteeId, newStatus) {
+            // Exemplo de requisição AJAX
+            fetch(`/mentorados/api/mentorados/${menteeId}/status/`, {    //fetch(`/api/mentorados/${menteeId}/status/`,
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify({
+                    status: newStatus
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Status atualizado no backend:', data);
+                } else {
+                    console.error('Erro ao atualizar status:', data.error);
+                    showAlert('Erro ao atualizar status. Tente novamente.', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Erro na requisição:', error);
+                showAlert('Erro de conexão. Tente novamente.', 'error');
+            });
+        }
+/* 
+Este bloco de código gerencia a interação do usuário com os mentorados: 
+permite abrir um modal para alterar o status (Ativo, Inativo ou Pausado),
+atualiza visualmente a tabela com o novo status escolhido, 
+recalcula e atualiza o gráfico com os dados atualizados, 
+e ainda salva essa alteração diretamente no banco de dados usando AJAX.
+*/
+
+
+
+
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('mobile-open');
+        });
+
+        // Form validation
+        document.getElementById('menteeForm').addEventListener('submit', function(e) {
+            const nome = document.getElementById('nome').value;
+            const foto = document.getElementById('foto').files[0];
+            const objetivo = document.getElementById('objetivo').value;
+            const navigator = document.getElementById('navigator').value;
+            const status = document.getElementById('status').value;
+            
+            if (!nome || !foto || !objetivo || !navigator || !status) {
+                e.preventDefault();
+                showAlert('Por favor, preencha todos os campos obrigatórios.', 'error');
+                return false;
+            }
+            
+            console.log('Dados do formulário:', {
+                nome: nome,
+                objetivo: objetivo,
+                navigator: navigator,
+                status: status,
+                foto: foto ? foto.name : 'Nenhuma foto'
+            });
+        });
+
+        function showAlert(message, type) {
+            const alert = document.getElementById('alert');
+            alert.textContent = message;
+            alert.className = `alert ${type}`;
+            alert.style.display = 'block';
+            
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000);
+        }
+
+        // Fechar modal ao clicar fora dele
+        window.onclick = function(event) {
+            const modal = document.getElementById('statusModal');
+            if (event.target === modal) {
+                closeStatusModal();
+            }
+        }
+
+        // Debug: Mostrar navigators carregados
+        console.log('Navigators disponíveis:');
+        const navigatorOptions = document.querySelectorAll('#navigatorList .mdc-list-item');
+        navigatorOptions.forEach(option => {
+            console.log('- ID:', option.getAttribute('data-value'), 'Nome:', option.querySelector('.mdc-list-item__text').textContent);
+        });
+
+        // Inicializar gráfico após carregamento da página
+        document.addEventListener('DOMContentLoaded', function() {
+            updateChart();
+            console.log('Estatísticas iniciais:', calculateMenteeStats());
+        });
+    </script>
+</body>
+</html>
+{% endblock 'body' %}

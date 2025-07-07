@@ -1,0 +1,299 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'body' %}
+<header class="bg-gray-900">
+  <nav class="flex items-center justify-between p-4 lg:px-8" aria-label="Global">
+    <div class="flex lg:flex-1">
+      <a href="#" class="-m-1.5 p-1.5">
+        <span class="sr-only">Your Company</span>
+        <img class="h-8 w-auto" src="{% static 'logo.png' %}" alt="">
+      </a>
+    </div>
+    <div class="flex lg:hidden">
+      <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400">
+        <span class="sr-only">Open main menu</span>
+        <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+    </div>
+    <div class="hidden lg:flex lg:gap-x-12">
+      <a href="{% url 'mentorados' %}" class="text-sm/6 font-semibold text-gray-100">Mentorados</a>
+      <a href="{% url 'reunioes' %}" class="text-sm/6 font-semibold text-gray-100">Reuniões</a>
+    </div>
+    <div class="hidden lg:flex lg:flex-1 lg:justify-end"></div>
+  </nav>
+</header>
+
+<main>
+  <!-- Header do perfil melhorado -->
+  <header class="relative isolate pt-16 bg-gray-900 border-b border-gray-700">
+    <div class="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
+      <div class="absolute left-16 top-full -mt-16 transform-gpu opacity-30 blur-3xl xl:left-1/2 xl:-ml-80">
+        <div class="aspect-[1154/678] w-[72.125rem] bg-gradient-to-br from-pink-500 to-pink-600"
+          style="clip-path: polygon(100% 38.5%, 82.6% 100%, 60.2% 37.7%, 52.4% 32.1%, 47.5% 41.8%, 45.2% 65.6%, 27.5% 23.4%, 0.1% 35.3%, 17.9% 0%, 27.7% 23.4%, 76.2% 2.5%, 74.2% 56%, 100% 38.5%)"></div>
+      </div>
+      <div class="absolute inset-x-0 bottom-0 h-px bg-gray-700"></div>
+    </div>
+
+    <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="mx-auto flex max-w-2xl items-center justify-between gap-x-8 lg:mx-0 lg:max-w-none">
+        <div class="flex items-center gap-x-6">
+          <div class="relative">
+            <img src="{{ mentorado.foto.url }}" alt="" class="size-20 flex-none rounded-full ring-4 ring-pink-500/20 shadow-lg">
+            <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-pink-500 rounded-full flex items-center justify-center">
+              <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <div class="text-2xl font-bold text-white mb-1">{{ mentorado }}</div>
+            <div class="flex items-center">
+              <div class="w-2 h-2 bg-pink-500 rounded-full mr-2"></div>
+              <div class="text-sm text-gray-300 font-medium">{{ mentorado.get_estagio_display }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Área de mensagens melhorada -->
+  {% if messages %}
+  <div class="bg-gray-900 pt-4 pb-2">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      {% for message in messages %}
+      <div class="mb-4 p-4 rounded-xl shadow-lg border-l-4 
+        {% if message.tags == 'success' %}
+          bg-green-50 text-green-800 border-green-500
+        {% elif message.tags == 'error' %}
+          bg-red-50 text-red-800 border-red-500
+        {% else %}
+          bg-blue-50 text-blue-800 border-blue-500
+        {% endif %}
+        flex items-center">
+        <div class="flex-shrink-0 mr-3">
+          {% if message.tags == 'success' %}
+            <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+            </svg>
+          {% elif message.tags == 'error' %}
+            <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+            </svg>
+          {% else %}
+            <svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+            </svg>
+          {% endif %}
+        </div>
+        <div class="font-medium">{{ message }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="bg-gray-900 min-h-screen">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+
+        <!-- Seção de Vídeos/Reuniões -->
+        <div class="lg:col-start-3 lg:row-end-1">
+          <div class="bg-white rounded-2xl shadow-2xl border border-gray-700 overflow-hidden">
+            <!-- Header do card -->
+            <div class="bg-gradient-to-r from-pink-500 to-pink-600 p-6">
+              <div class="flex items-center">
+                <div class="bg-white bg-opacity-20 rounded-full p-3 mr-4">
+                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h2 class="text-xl font-semibold text-white">Reuniões</h2>
+                  <p class="text-pink-100 text-sm">Envie gravações das reuniões</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Formulário de upload -->
+            <div class="p-6">
+              <form action="{% url 'upload' mentorado.id %}" method="POST" enctype="multipart/form-data" class="space-y-4">
+                {% csrf_token %}
+                <div class="space-y-2">
+                  <label for="video" class="flex items-center text-sm font-semibold text-gray-700">
+                    <svg class="w-4 h-4 mr-2 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                    </svg>
+                    Selecionar Vídeo
+                  </label>
+                  <input type="file" name="video" id="video" required
+                    class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 transition-all duration-300 bg-gray-50 hover:bg-white text-gray-700 font-medium file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100">
+                </div>
+                <button type="submit"
+                  class="w-full bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center">
+                  <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                  </svg>
+                  Enviar Vídeo
+                </button>
+              </form>
+
+              <!-- Lista de vídeos -->
+              <div class="mt-6 space-y-3">
+                {% for video in videos %}
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300">
+                  <div class="flex items-center flex-1">
+                    <div class="flex-shrink-0 mr-4">
+                      <div class="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center">
+                        <svg class="w-5 h-5 text-pink-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M2 6a2 2 0 012-2h6l2 2h6a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/>
+                        </svg>
+                      </div>
+                    </div>
+                    <div class="flex-1">
+                      <a href="{{ video.video.url }}" class="text-sm font-medium text-pink-600 hover:text-pink-700 hover:underline">
+                        {{ video.mentorado }}
+                      </a>
+                    </div>
+                  </div>
+                  
+                  <!-- Botão de exclusão do vídeo -->
+                  <form method="POST" action="{% url 'deletar_video' video.id %}" class="ml-3" onsubmit="return confirm('Tem certeza que deseja excluir este vídeo?');">
+                    {% csrf_token %}
+                    <button type="submit" class="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all duration-200">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                      </svg>
+                    </button>
+                  </form>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Seção de Tarefas -->
+        <div class="lg:col-span-2 lg:row-span-2 lg:row-end-2">
+          <div class="bg-white rounded-2xl shadow-2xl border border-gray-700 overflow-hidden">
+            <!-- Header do card -->
+            <div class="bg-gradient-to-r from-pink-500 to-pink-600 p-6">
+              <div class="flex items-center">
+                <div class="bg-white bg-opacity-20 rounded-full p-3 mr-4">
+                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h2 class="text-xl font-semibold text-white">Tarefas do Mentorado</h2>
+                  <p class="text-pink-100 text-sm">Gerencie e acompanhe as atividades</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Formulário de tarefas -->
+            <div class="p-8">
+              <form action="{% url 'tarefa' mentorado.id %}" method="POST" class="space-y-4 mb-8">
+                {% csrf_token %}
+                <div class="space-y-2">
+                  <label for="tarefa" class="flex items-center text-sm font-semibold text-gray-700">
+                    <svg class="w-4 h-4 mr-2 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    Nova Tarefa
+                  </label>
+                  <input type="text" name="tarefa" id="tarefa" required placeholder="Digite a tarefa..."
+                    class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 transition-all duration-300 bg-gray-50 hover:bg-white text-gray-700 font-medium">
+                </div>
+                <button type="submit"
+                  class="w-full bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center">
+                  <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                  </svg>
+                  Adicionar Tarefa
+                </button>
+              </form>
+
+              <!-- Lista de tarefas -->
+              <div class="space-y-3">
+                {% for tarefa in tarefas %}
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300">
+                  <div class="flex items-center flex-1">
+                    <input type="checkbox" id="tarefa-{{ forloop.counter }}"
+                      class="w-5 h-5 text-pink-600 bg-white border-2 border-gray-300 rounded focus:ring-pink-500 focus:ring-2 mr-4 transition-all duration-300">
+                    <label for="tarefa-{{ forloop.counter }}" class="text-sm font-medium text-gray-700 cursor-pointer">
+                      {{ tarefa.tarefa }}
+                    </label>
+                  </div>
+                  
+                  <!-- Botão de exclusão da tarefa -->
+                  <form method="POST" action="{% url 'deletar_tarefa' tarefa.id %}" class="ml-3" onsubmit="return confirm('Tem certeza que deseja excluir esta tarefa?');">
+                    {% csrf_token %}
+                    <button type="submit" class="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all duration-200">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                      </svg>
+                    </button>
+                  </form>
+                </div>
+                {% empty %}
+                <div class="text-center py-8">
+                  <svg class="w-12 h-12 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                  </svg>
+                  <p class="text-gray-500 text-sm">Nenhuma tarefa cadastrada ainda</p>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<style>
+  /* Animações suaves para os campos do formulário */
+  input:focus, textarea:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 25px rgba(236, 72, 153, 0.1);
+  }
+  
+  /* Hover effect para os campos */
+  .hover\:bg-white:hover {
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Animação do botão principal */
+  button[type="submit"]:hover {
+    transform: scale(1.02) translateY(-1px);
+  }
+
+  /* Hover effect para os itens da lista */
+  .hover\:bg-gray-100:hover {
+    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.1);
+  }
+
+  /* Animação do checkbox */
+  input[type="checkbox"]:checked {
+    background-color: #ec4899;
+    border-color: #ec4899;
+  }
+
+  /* Animação suave para transições */
+  * {
+    transition: all 0.3s ease;
+  }
+
+  /* Estilo para botões de exclusão */
+  .hover\:bg-red-50:hover {
+    background-color: #fef2f2;
+  }
+</style>
+
+{% endblock 'body' %}

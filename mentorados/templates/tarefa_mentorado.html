@@ -1,0 +1,467 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'body' %}
+<script src="https://unpkg.com/htmx.org@2.0.4"></script>
+
+<header class="bg-gray-900">
+  <nav class="flex items-center justify-between p-4 lg:px-8" aria-label="Global">
+    <div class="flex lg:flex-1">
+      <a href="#" class="-m-1.5 p-1.5">
+        <span class="sr-only">Your Company</span>
+        <img class="h-8 w-auto" src="{% static 'logo.png' %}" alt="">
+      </a>
+    </div>
+    <div class="flex lg:hidden">
+      <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400">
+        <span class="sr-only">Open main menu</span>
+        <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+    </div>
+    <div class="hidden lg:flex lg:gap-x-12">
+      <a href="{% url 'mentorados' %}" class="text-sm/6 font-semibold text-gray-100">Mentorados</a>
+      <a href="{% url 'reunioes' %}" class="text-sm/6 font-semibold text-gray-100">Reuniões</a>
+    </div>
+    <div class="hidden lg:flex lg:flex-1 lg:justify-end"></div>
+  </nav>
+</header>
+
+<div class="min-h-screen bg-gray-900">
+  <!-- Header do Perfil do Mentorado -->
+  <header class="relative isolate pt-16 bg-gradient-to-r from-pink-500 to-pink-600 border-b border-gray-700">
+    <div class="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
+      <div class="absolute left-16 top-full -mt-16 transform-gpu opacity-30 blur-3xl xl:left-1/2 xl:-ml-80">
+        <div class="aspect-[1154/678] w-[72.125rem] bg-gradient-to-br from-[#FF80B5] to-[#9089FC]" style="clip-path: polygon(100% 38.5%, 82.6% 100%, 60.2% 37.7%, 52.4% 32.1%, 47.5% 41.8%, 45.2% 65.6%, 27.5% 23.4%, 0.1% 35.3%, 17.9% 0%, 27.7% 23.4%, 76.2% 2.5%, 74.2% 56%, 100% 38.5%)">
+        </div>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="mx-auto flex max-w-2xl items-center justify-between gap-x-8 lg:mx-0 lg:max-w-none">
+        <div class="flex items-center gap-x-6">
+          <img src="{{ mentorado.foto.url }}" alt="" class="size-20 flex-none rounded-full ring-4 ring-white/20 shadow-lg">
+          <div>
+            <div class="text-2xl font-bold text-white">{{ mentorado }}</div>
+            <div class="text-pink-100 font-medium">{{ mentorado.get_estagio_display }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container mx-auto px-4 py-8">
+    <div class="max-w-7xl mx-auto">
+      <!-- Painel de Gerência com IA -->
+      <div class="mb-8">
+        <div class="bg-white rounded-2xl shadow-2xl border border-gray-700 overflow-hidden">
+          <div class="bg-gradient-to-r from-purple-500 to-blue-600 p-6">
+            <div class="flex items-center">
+              <div class="bg-white bg-opacity-20 rounded-full p-3 mr-4">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                </svg>
+              </div>
+              <div>
+                <h2 class="text-2xl font-bold text-white">Painel de Gerência com IA</h2>
+                <p class="text-purple-100 text-sm">Análise inteligente do progresso e recomendações</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <!-- Mapa de Trilhas -->
+              <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 border border-green-200">
+                <div class="flex items-center mb-3">
+                  <div class="bg-green-500 rounded-full p-2 mr-3">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m-6 3l6-3"></path>
+                    </svg>
+                  </div>
+                  <h3 class="font-semibold text-green-700">Mapa de Trilhas</h3>
+                </div>
+                <p class="text-green-600 text-sm mb-3">Progresso na jornada de mentoria</p>
+                <div class="flex items-center">
+                  <div class="flex-1 bg-green-200 rounded-full h-2 mr-3">
+                    <div class="bg-green-500 h-2 rounded-full" style="width: {{ progresso_trilha }}%"></div>
+                  </div>
+                  <span class="text-sm font-medium text-green-700">{{ progresso_trilha }}%</span>
+                </div>
+              </div>
+
+              <!-- Progresso Geral -->
+              <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 border border-blue-200">
+                <div class="flex items-center mb-3">
+                  <div class="bg-blue-500 rounded-full p-2 mr-3">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                    </svg>
+                  </div>
+                  <h3 class="font-semibold text-blue-700">Progresso Geral</h3>
+                </div>
+                <p class="text-blue-600 text-sm mb-3">Análise de desempenho</p>
+                <div class="text-2xl font-bold text-blue-700">{{ tarefas_concluidas }}/{{ total_tarefas }}</div>
+                <p class="text-xs text-blue-500">tarefas concluídas</p>
+              </div>
+
+              <!-- Relatórios IA -->
+              <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6 border border-purple-200">
+                <div class="flex items-center mb-3">
+                  <div class="bg-purple-500 rounded-full p-2 mr-3">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                  </div>
+                  <h3 class="font-semibold text-purple-700">Relatórios IA</h3>
+                </div>
+                <p class="text-purple-600 text-sm mb-3">Insights automáticos</p>
+                <div class="text-sm text-purple-700">
+                  <p class="mb-1">• {{ recomendacao_ia }}</p>
+                  <p class="text-xs text-purple-500">Última análise: {{ ultima_analise }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Assistente de IA -->
+      <div class="mb-8">
+        <div class="bg-white rounded-2xl shadow-2xl border border-gray-700 overflow-hidden">
+          <div class="bg-gradient-to-r from-indigo-500 to-purple-600 p-6">
+            <div class="flex items-center">
+              <div class="bg-white bg-opacity-20 rounded-full p-3 mr-4">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                </svg>
+              </div>
+              <div>
+                <h2 class="text-2xl font-bold text-white">Assistente de IA</h2>
+                <p class="text-indigo-100 text-sm">Tire suas dúvidas sobre qualquer assunto</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="p-6">
+            <div class="space-y-4">
+              <!-- Formulário de Dúvida -->
+              <div class="flex gap-4">
+                <div class="flex-1">
+                  <input 
+                    type="text" 
+                    id="duvida-input" 
+                    placeholder="Ex: Quero aprender sobre..."
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  >
+                </div>
+                <button 
+                  onclick="perguntarIA()"
+                  id="btn-perguntar"
+                  class="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors duration-300 flex items-center gap-2"
+                >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
+                  </svg>
+                  Perguntar
+                </button>
+              </div>
+
+              <!-- Área de Loading -->
+              <div id="loading-ia" class="hidden">
+                <div class="flex items-center justify-center py-8">
+                  <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+                  <span class="ml-3 text-gray-600">Processando sua dúvida...</span>
+                </div>
+              </div>
+
+              <!-- Área de Resposta -->
+              <div id="resposta-ia" class="hidden">
+                <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6 border border-indigo-200">
+                  <div class="flex items-start gap-4">
+                    <div class="bg-indigo-100 rounded-full p-2 flex-shrink-0">
+                      <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                      </svg>
+                    </div>
+                    <div class="flex-1">
+                      <h4 class="font-semibold text-indigo-800 mb-2">Resposta do Assistente:</h4>
+                      <div id="texto-resposta" class="text-gray-700 leading-relaxed"></div>
+                      <div class="mt-4 text-xs text-indigo-500" id="timestamp-resposta"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Área de Erro -->
+              <div id="erro-ia" class="hidden">
+                <div class="bg-red-50 border border-red-200 rounded-xl p-4">
+                  <div class="flex items-center gap-2">
+                    <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="text-red-700 font-medium">Erro:</span>
+                  </div>
+                  <div id="texto-erro" class="text-red-600 mt-2"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Seção de Tarefas -->
+        <div class="lg:col-span-2">
+          <div class="bg-white rounded-2xl shadow-2xl border border-gray-700 overflow-hidden">
+            <!-- Header do card -->
+            <div class="bg-gradient-to-r from-pink-500 to-pink-600 p-6">
+              <div class="flex items-center">
+                <div class="bg-white bg-opacity-20 rounded-full p-3 mr-4">
+                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h2 class="text-2xl font-bold text-white">Tarefas do Mentorado</h2>
+                  <p class="text-pink-100 text-sm">Acompanhe o progresso das atividades</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lista de Tarefas -->
+            <div class="p-8">
+              {% if tarefas %}
+                <div class="space-y-4">
+                  {% for tarefa in tarefas %}
+                  <div class="flex items-center p-4 rounded-xl hover:bg-gray-50 transition-all duration-300 border border-gray-200">
+                    <input 
+                      id="checkbox-{{ forloop.counter }}" 
+                      hx-post='/mentorados/tarefa_alterar/{{tarefa.id}}' 
+                      hx-trigger="click" 
+                      type="checkbox" 
+                      class="w-5 h-5 text-pink-600 bg-white border-2 border-gray-300 rounded focus:ring-pink-500 focus:ring-2 transition-all duration-300" 
+                      {% if tarefa.realizada %}checked{% endif %}
+                    >
+                    <label for="checkbox-{{ forloop.counter }}" class="ml-4 text-gray-700 font-medium cursor-pointer select-none">
+                      {{ tarefa.tarefa }}
+                    </label>
+                  </div>
+                  {% endfor %}
+                </div>
+              {% else %}
+                <div class="text-center py-12">
+                  <svg class="w-12 h-12 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                  </svg>
+                  <p class="text-gray-500">Nenhuma tarefa cadastrada ainda</p>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Seção de Reuniões -->
+        <div class="lg:col-start-3">
+          <div class="bg-white rounded-2xl shadow-2xl border border-gray-700 overflow-hidden">
+            <!-- Header do card -->
+            <div class="bg-gradient-to-r from-pink-500 to-pink-600 p-6">
+              <div class="flex items-center">
+                <div class="bg-white bg-opacity-20 rounded-full p-3 mr-4">
+                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h2 class="text-xl font-semibold text-white">Reuniões</h2>
+                  <p class="text-pink-100 text-sm">Gravações das sessões</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lista de Vídeos -->
+            <div class="p-6">
+              {% if videos %}
+                <div class="space-y-4">
+                  {% for video in videos %}
+                  <div class="flex items-center gap-x-4 p-4 rounded-xl hover:bg-gray-50 transition-all duration-300 border border-gray-200">
+                    <div class="bg-pink-100 rounded-full p-2 flex-shrink-0">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5 text-pink-600">
+                        <path d="M4.5 4.5a3 3 0 0 0 3 3v9a3 3 0 0 0 3 3h8.25a3 3 0 0 0 3-3v-9a3 3 0 0 0-3-3H4.5Z" />
+                      </svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <a href="{{ video.video.url }}" class="text-pink-600 hover:text-pink-700 font-medium text-sm transition-colors duration-300">
+                        {{ video.mentorado }}
+                      </a>
+                      <p class="text-xs text-gray-500 mt-1">10 - 5</p>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              {% else %}
+                <div class="text-center py-8">
+                  <svg class="w-10 h-10 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                  </svg>
+                  <p class="text-gray-500 text-sm">Nenhuma reunião gravada</p>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+async function perguntarIA() {
+  const input = document.getElementById('duvida-input');
+  const btnPerguntar = document.getElementById('btn-perguntar');
+  const loadingDiv = document.getElementById('loading-ia');
+  const respostaDiv = document.getElementById('resposta-ia');
+  const erroDiv = document.getElementById('erro-ia');
+  
+  const duvida = input.value.trim();
+  
+  // Validação
+  if (!duvida) {
+    mostrarErro('Por favor, digite sua dúvida.');
+    return;
+  }
+  
+  // Limpar estados anteriores
+  ocultarTodos();
+  
+  // Mostrar loading
+  loadingDiv.classList.remove('hidden');
+  btnPerguntar.disabled = true;
+  btnPerguntar.innerHTML = 'Processando...';
+  
+  try {
+    const response = await fetch('/mentorados/assistente-ia/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken')
+      },
+      body: JSON.stringify({ duvida: duvida })
+    });
+    
+    const data = await response.json();
+    
+    if (response.ok && data.sucesso) {
+      mostrarResposta(data.resposta, data.timestamp);
+      input.value = ''; // Limpar input após sucesso
+    } else {
+      mostrarErro(data.error || 'Erro ao processar sua dúvida.');
+    }
+    
+  } catch (error) {
+    console.error('Erro:', error);
+    mostrarErro('Erro de conexão. Tente novamente.');
+  } finally {
+    // Restaurar botão
+    loadingDiv.classList.add('hidden');
+    btnPerguntar.disabled = false;
+    btnPerguntar.innerHTML = `
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
+      </svg>
+      Perguntar
+    `;
+  }
+}
+
+function mostrarResposta(texto, timestamp) {
+  const respostaDiv = document.getElementById('resposta-ia');
+  const textoResposta = document.getElementById('texto-resposta');
+  const timestampResposta = document.getElementById('timestamp-resposta');
+  
+  textoResposta.innerHTML = texto.replace(/\n/g, '<br>');
+  timestampResposta.textContent = `Respondido em: ${timestamp}`;
+  respostaDiv.classList.remove('hidden');
+}
+
+function mostrarErro(mensagem) {
+  const erroDiv = document.getElementById('erro-ia');
+  const textoErro = document.getElementById('texto-erro');
+  
+  textoErro.textContent = mensagem;
+  erroDiv.classList.remove('hidden');
+}
+
+function ocultarTodos() {
+  document.getElementById('resposta-ia').classList.add('hidden');
+  document.getElementById('erro-ia').classList.add('hidden');
+}
+
+// Função para obter CSRF token
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+// Permitir envio com Enter
+document.getElementById('duvida-input').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    perguntarIA();
+  }
+});
+</script>
+
+<style>
+  /* Animações suaves para os checkboxes */
+  input[type="checkbox"]:checked {
+    background-color: #ec4899;
+    border-color: #ec4899;
+  }
+  
+  /* Hover effects para os cards */
+  .hover\:bg-gray-50:hover {
+    background-color: #f9fafb;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.1);
+  }
+  
+  /* Animação para labels dos checkboxes */
+  input[type="checkbox"]:checked + label {
+    text-decoration: line-through;
+    opacity: 0.6;
+  }
+  
+  /* Transições suaves */
+  * {
+    transition: all 0.3s ease;
+  }
+  
+  /* Estilo para botão desabilitado */
+  button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  /* Animação de loading */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+</style>
+
+{% endblock 'body' %}

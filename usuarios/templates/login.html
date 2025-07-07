@@ -1,0 +1,267 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Material Design Icons -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<!-- Inter Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block 'body' %}
+<div class="min-h-screen bg-gray-900 flex items-center justify-center p-4">
+  <div class="max-w-6xl w-full">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+      
+      <!-- Formulário de Login -->
+      <div class="order-2 lg:order-1 relative">
+        <!-- Efeitos de background decorativos -->
+        <div class="absolute -top-4 -left-4 w-20 h-20 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full blur-xl opacity-20 animate-pulse"></div>
+        <div class="absolute -bottom-4 -right-4 w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-xl opacity-20 animate-pulse" style="animation-delay: 1s;"></div>
+        
+        <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl shadow-2xl border border-gray-700 overflow-hidden backdrop-blur-sm relative">
+          <!-- Elemento decorativo superior -->
+          <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
+          
+          <!-- Header do card -->
+          <div class="bg-gradient-to-r from-blue-500 via-purple-600 to-pink-600 p-8 relative overflow-hidden">
+            <!-- Elementos decorativos do header -->
+            <div class="absolute top-0 right-0 w-32 h-32 bg-white bg-opacity-10 rounded-full -mr-16 -mt-16"></div>
+            <div class="absolute bottom-0 left-0 w-24 h-24 bg-white bg-opacity-10 rounded-full -ml-12 -mb-12"></div>
+            
+            <div class="flex items-center relative z-10">
+              <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-full p-4 mr-4 shadow-lg">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                </svg>
+              </div>
+              <div>
+                <h2 class="text-4xl font-bold text-white drop-shadow-lg">LOGIN</h2>
+                <p class="text-white text-lg mt-2 drop-shadow-md flex items-center">
+                  <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                  </svg>
+                  Bem-vindo de volta!
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Conteúdo do formulário -->
+          <div class="p-8 bg-gradient-to-br from-gray-800 to-gray-900">
+            <p class="text-gray-300 mb-6 text-center">
+              Não tem conta? 
+              <a href="{% url 'cadastro' %}" class="text-blue-400 hover:text-blue-300 font-medium transition-colors duration-300 cursor-pointer hover:underline">Crie sua conta aqui</a>
+            </p>
+            
+            {% if messages %}
+              {% for message in messages %}
+                <div class="rounded-xl p-4 mb-6 bg-red-900 bg-opacity-50 border border-red-500 backdrop-blur-sm">
+                  <div class="flex items-center">
+                    <svg class="w-5 h-5 text-red-400 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="text-red-300 font-medium">{{message}}</span>
+                  </div>
+                </div>
+              {% endfor %}
+            {% endif %}
+
+            <form action="{% url 'login' %}" method="POST" class="space-y-6">
+              {% csrf_token %}
+              
+              <!-- Campo Nome -->
+              <div class="relative group">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <svg class="w-5 h-5 text-gray-400 group-focus-within:text-blue-400 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                  </svg>
+                </div>
+                <input 
+                  type="text" 
+                  id="username" 
+                  name="username" 
+                  required
+                  class="block w-full pl-12 pr-4 py-4 bg-gray-700 bg-opacity-50 border border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-white placeholder-gray-400 hover:border-gray-500 backdrop-blur-sm"
+                  placeholder="Nome de usuário"
+                >
+              </div>
+              
+              <!-- Campo Senha -->
+              <div class="relative group">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <svg class="w-5 h-5 text-gray-400 group-focus-within:text-blue-400 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                  </svg>
+                </div>
+                <input 
+                  type="password" 
+                  id="password" 
+                  name="senha" 
+                  required
+                  class="block w-full pl-12 pr-4 py-4 bg-gray-700 bg-opacity-50 border border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 text-white placeholder-gray-400 hover:border-gray-500 backdrop-blur-sm"
+                  placeholder="Digite sua senha"
+                >
+              </div>
+              
+              <!-- Botão de Login -->
+              <div class="pt-4">
+                <button 
+                  type="submit" 
+                  class="w-full bg-gradient-to-r from-blue-500 via-purple-600 to-pink-600 text-white font-bold py-4 px-6 rounded-xl hover:from-blue-600 hover:via-purple-700 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-300 transform hover:scale-105 shadow-lg cursor-pointer relative overflow-hidden"
+                >
+                  <div class="absolute inset-0 bg-gradient-to-r from-white to-transparent opacity-0 hover:opacity-10 transition-opacity duration-300"></div>
+                  <span class="flex items-center justify-center relative z-10">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                    </svg>
+                    ENTRAR
+                  </span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seção da Ilustração -->
+      <div class="order-1 lg:order-2 flex justify-center items-center">
+        <div class="relative">
+          <!-- Efeito de fundo -->
+          <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur-3xl opacity-10 animate-pulse"></div>
+          
+          <!-- Container da ilustração -->
+          <div class="relative bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl p-12 shadow-2xl border border-gray-200">
+            
+            <!-- Ícone de login -->
+            <div class="flex justify-center mb-8">
+              <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl p-6 shadow-xl">
+                <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                </svg>
+              </div>
+            </div>
+            
+            <!-- Texto inspiracional -->
+            <div class="text-center">
+              <h3 class="text-2xl font-bold text-gray-800 mb-2">Bem-vindo de volta!</h3>
+              <p class="text-gray-600">Continue de onde você parou</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    cursor: default;
+  }
+  
+  /* Garantir que todos os elementos interativos tenham cursor apropriado */
+  input, button, a, [role="button"] {
+    cursor: pointer !important;
+  }
+  
+  input {
+    cursor: text !important;
+  }
+  
+  /* Animações suaves */
+  .animate-pulse {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 0.1;
+    }
+    50% {
+      opacity: 0.2;
+    }
+  }
+  
+  /* Efeitos de hover mais suaves */
+  .hover\:scale-105:hover {
+    transform: scale(1.02);
+  }
+  
+  /* Transições mais específicas */
+  input {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  }
+  
+  button {
+    transition: all 0.3s ease;
+  }
+  
+  a {
+    transition: color 0.3s ease;
+  }
+  
+  /* Foco nos campos de input */
+  input:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    background-color: rgba(55, 65, 81, 0.7) !important;
+  }
+  
+  /* Hover nos campos de input */
+  input:hover {
+    border-color: #6b7280 !important;
+    background-color: rgba(55, 65, 81, 0.6) !important;
+  }
+  
+  /* Estilo para mensagens de erro */
+  .error {
+    background: rgba(127, 29, 29, 0.5);
+    border-color: #ef4444;
+  }
+  
+  /* Media queries para responsividade */
+  @media (max-width: 1024px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .order-1 {
+      order: 1;
+    }
+    
+    .order-2 {
+      order: 2;
+    }
+  }
+  
+  /* Garantir que SVGs não interfiram no cursor */
+  svg {
+    pointer-events: none;
+  }
+  
+  /* Melhorar visibilidade dos placeholders */
+  input::placeholder {
+    color: #9ca3af !important;
+    opacity: 1;
+  }
+  
+  /* Garantir que os ícones dos inputs não sejam clicáveis */
+  .pointer-events-none {
+    pointer-events: none !important;
+  }
+  
+  /* Efeitos de glass morphism */
+  .backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+  }
+  
+  /* Animação personalizada para elementos decorativos */
+  .animate-pulse:nth-child(2) {
+    animation-delay: 1.5s;
+  }
+</style>
+{% endblock 'body' %}

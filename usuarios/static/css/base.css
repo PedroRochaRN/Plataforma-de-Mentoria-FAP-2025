@@ -1,0 +1,193 @@
+.registration-form,
+.registration-form * {
+  box-sizing: border-box;
+}
+.registration-form {
+  background: #e1ebff;
+  height: 1280px;
+  position: relative;
+  overflow: hidden;
+}
+.register-now {
+  color: #000000;
+  text-align: left;
+  font-family: "Cabin-Bold", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  position: absolute;
+  left: 93px;
+  top: 95px;
+}
+.name {
+  color: #000000;
+  text-align: left;
+  font-family: "Cabin-Bold", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  position: absolute;
+  left: 47px;
+  top: 143px;
+}
+.email {
+  color: #000000;
+  text-align: left;
+  font-family: "Cabin-Bold", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  position: absolute;
+  left: 47px;
+  top: 171px;
+}
+.password {
+  color: #000000;
+  text-align: left;
+  font-family: "Cabin-Bold", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  position: absolute;
+  left: 47px;
+  top: 199px;
+}
+.password2 {
+  color: #000000;
+  text-align: left;
+  font-family: "Cabin-Bold", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  position: absolute;
+  left: 47px;
+  top: 226px;
+}
+.already-have-account-login-here {
+  text-align: left;
+  font-family: "Cabin-Regular", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  position: absolute;
+  left: 93px;
+  top: 114px;
+  width: 169px;
+  height: 19px;
+}
+.already-have-account-login-here-span {
+  color: #000000;
+  font-family: "Cabin-Regular", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+}
+.already-have-account-login-here-span2 {
+  color: #000000;
+  font-family: "Cabin-Regular", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  text-decoration: underline;
+}
+.already-have-account-login-here-span3 {
+  color: #848484;
+  font-family: "Cabin-Regular", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  text-decoration: underline;
+}
+.group-2 {
+  position: absolute;
+  inset: 0;
+}
+.rectangle-2 {
+  background: #ffffff;
+  width: 221px;
+  height: 17px;
+  position: absolute;
+  left: 113px;
+  top: 143px;
+}
+.enter-your-name-here {
+  color: #948888;
+  text-align: left;
+  font-family: "Cabin-Italic", sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  font-style: italic;
+  position: absolute;
+  left: 118px;
+  top: 145px;
+}
+.group-3 {
+  position: absolute;
+  inset: 0;
+}
+.rectangle-22 {
+  background: #ffffff;
+  width: 221px;
+  height: 17px;
+  position: absolute;
+  left: 113px;
+  top: 171px;
+}
+.enter-your-email-here {
+  color: #948888;
+  text-align: left;
+  font-family: "Cabin-Italic", sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  font-style: italic;
+  position: absolute;
+  left: 118px;
+  top: 173px;
+}
+.group-22 {
+  width: 221px;
+  height: 46px;
+  position: static;
+}
+.rectangle-23 {
+  background: #ffffff;
+  width: 221px;
+  height: 17px;
+  position: absolute;
+  left: 113px;
+  top: 197px;
+}
+.create-password {
+  color: #948888;
+  text-align: left;
+  font-family: "Cabin-Italic", sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  font-style: italic;
+  position: absolute;
+  left: 118px;
+  top: 199px;
+}
+.group-23 {
+  width: 221px;
+  height: 17px;
+  position: static;
+}
+.rectangle-24 {
+  background: #ffffff;
+  width: 221px;
+  height: 17px;
+  position: absolute;
+  left: 113px;
+  top: 226px;
+}
+.re-enter-password {
+  color: #948888;
+  text-align: left;
+  font-family: "Cabin-Italic", sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  font-style: italic;
+  position: absolute;
+  left: 118px;
+  top: 228px;
+}
+.image-removebg-preview-27-1 {
+  width: 367px;
+  height: 357px;
+  position: absolute;
+  left: 278px;
+  top: 51px;
+  object-fit: cover;
+}
