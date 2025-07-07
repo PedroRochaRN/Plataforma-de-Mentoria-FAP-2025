@@ -6,6 +6,142 @@ O **MentorBook** é uma plataforma web construída com Django que conecta mentor
 
 ---
 
+## 📂 Estrutura de Arquivos
+
+```
+mentorbook/
+├── .vscode/                 # Configurações do VS Code
+├── core/                    # Configurações do projeto Django
+│   ├── __init__.py
+│   ├── settings.py          # Configurações Django + Gemini API
+│   ├── urls.py              # URLs principais
+│   ├── wsgi.py              # Configuração WSGI
+│   └── asgi.py              # Configuração ASGI
+├── usuarios/                # App de autenticação
+│   ├── __pycache__/         # Cache Python
+│   ├── migrations/          # Migrações do banco
+│   ├── static/              # Arquivos estáticos
+│   ├── templates/           # Templates de login/cadastro
+│   │   ├── cadastro.html
+│   │   └── login.html
+│   ├── __init__.py
+│   ├── admin.py             # Configuração Django Admin
+│   ├── apps.py              # Configuração do app
+│   ├── models.py            # Models de usuário
+│   ├── tests.py             # Testes unitários
+│   ├── urls.py              # URLs de autenticação
+│   └── views.py             # Views de cadastro e login
+├── mentorados/              # App principal
+│   ├── __pycache__/         # Cache Python
+│   ├── migrations/          # Migrações do banco
+│   ├── templates/           # Templates principais
+│   │   └── base.html        # Template base
+│   ├── __init__.py
+│   ├── admin.py             # Configuração Django Admin
+│   ├── apps.py              # Configuração do app
+│   ├── auth.py              # Validação de tokens
+│   ├── models.py            # Models do banco de dados
+│   ├── tests.py             # Testes unitários
+│   ├── urls.py              # URLs do app
+│   └── views.py             # Lógica de mentores/mentorados
+├── templates/               # Templates globais
+│   └── base.html            # Template base global
+├── media/                   # Arquivos de upload
+│   ├── fotos/               # Fotos dos mentorados
+│   └── videos/              # Vídeos educativos
+├── .env                     # Variáveis de ambiente (não versionar)
+├── .gitignore               # Arquivos ignorados pelo Git
+├── db.sqlite3               # Banco de dados SQLite
+├── main.py                  # Arquivo principal/auxiliar
+├── manage.py                # Gerenciador Django
+├── README.md                # Documentação do projeto
+├── roteiro.txt              # Documentação adicional/roteiro
+└── requirements.txt         # Dependências do projeto
+```
+
+---
+
+## 📝 Detalhamento dos Diretórios
+
+### **📁 Core (Configurações Django):**
+- **`settings.py`** - Configurações principais + integração Google Gemini
+- **`urls.py`** - Roteamento principal da aplicação
+- **`wsgi.py`** - Configuração para servidor WSGI
+- **`asgi.py`** - Configuração para servidor ASGI
+
+### **👤 Usuarios (Autenticação):**
+- **`models.py`** - Model de usuário personalizado
+- **`views.py`** - Lógica de cadastro e login
+- **`urls.py`** - URLs de autenticação
+- **`templates/`** - Templates de login/cadastro
+- **`static/`** - CSS/JS específicos de autenticação
+
+### **🎓 Mentorados (App Principal):**
+- **`models.py`** - Models: Mentorados, Tarefas, Uploads, Reuniões, etc.
+- **`views.py`** - Lógica principal da aplicação
+- **`auth.py`** - Sistema de validação de tokens
+- **`urls.py`** - URLs do sistema de mentoria
+- **`templates/`** - Templates do sistema principal
+
+### **📄 Templates (Globais):**
+- **`base.html`** - Template base com Tailwind CSS + Material Design
+- Templates compartilhados entre apps
+
+### **📁 Media (Uploads):**
+- **`fotos/`** - Fotos de perfil dos mentorados
+- **`videos/`** - Vídeos educativos enviados pelos mentores
+
+### **⚙️ Configuração:**
+- **`.env`** - Chave API Google Gemini + configurações sensíveis
+- **`.gitignore`** - Arquivos/pastas ignorados pelo Git
+- **`requirements.txt`** - Dependências Python do projeto
+
+### **📊 Banco de Dados:**
+- **`db.sqlite3`** - Banco SQLite com todos os dados
+- **`migrations/`** - Histórico de mudanças no banco
+
+---
+
+## 🔧 Arquivos de Desenvolvimento
+
+### **VS Code:**
+- **`.vscode/`** - Configurações específicas do editor
+- Configurações de debugging e extensões
+
+### **Python:**
+- **`__pycache__/`** - Cache Python (gerado automaticamente)
+- **`main.py`** - Arquivo auxiliar/script principal
+- **`manage.py`** - Gerenciador Django padrão
+
+### **Documentação:**
+- **`README.md`** - Documentação completa do projeto
+- **`roteiro.txt`** - Roteiro de desenvolvimento/notas
+
+---
+
+## 🚀 Estrutura Modular
+
+### **Separação de Responsabilidades:**
+- **`core/`** - Configurações centrais
+- **`usuarios/`** - Autenticação e gestão de usuários
+- **`mentorados/`** - Lógica principal de mentoria
+- **`templates/`** - Interface do usuário
+- **`media/`** - Conteúdo multimedia
+
+### **Organização Django:**
+- Cada app tem sua própria pasta `templates/`
+- Arquivos estáticos organizados por app
+- Migrações isoladas por aplicação
+- Models distribuídos logicamente
+
+### **Boas Práticas:**
+- Separação de templates globais e específicos
+- Configurações sensíveis em `.env`
+- Estrutura preparada para deploy
+- Organização escalável e manutenível
+
+---
+
 ## ⚙️ Tecnologias Utilizadas
 
 - **Python 3** & **Django 5**  
@@ -175,36 +311,6 @@ O projeto implementa dois sistemas de autenticação distintos:
 - **Documentação Completa:** Código comentado e README detalhado
 - **Categorização Inteligente:** Sistema de navigators e tags de reunião
 - **Histórico Completo:** Rastreamento de todas as atividades
-
----
-
-## 📂 Estrutura de Arquivos
-
-```
-mentorbook/
-├── core/                    # Configurações do projeto
-│   ├── settings.py          # Configurações Django + Gemini API
-│   ├── urls.py              # URLs principais
-│   └── wsgi.py              # Configuração WSGI
-├── usuarios/                # App de autenticação
-│   ├── views.py             # Views de cadastro e login
-│   ├── urls.py              # URLs de autenticação
-│   └── templates/           # Templates de login/cadastro
-├── mentorados/              # App principal
-│   ├── views.py             # Lógica de mentores/mentorados
-│   ├── models.py            # Models do banco de dados
-│   ├── auth.py              # Validação de tokens
-│   ├── templates/           # Templates com Tailwind + HTMX
-│   ├── static/              # Arquivos estáticos
-│   └── migrations/          # Migrações do banco
-├── media/                   # Arquivos de upload
-│   ├── fotos/               # Fotos dos mentorados
-│   └── video/               # Vídeos educativos
-├── db.sqlite3               # Banco de dados SQLite
-├── manage.py                # Gerenciador Django
-├── .env                     # Variáveis de ambiente (não versionar)
-└── requirements.txt         # Dependências do projeto
-```
 
 ---
 
