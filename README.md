@@ -115,7 +115,7 @@ mentorbook/
 
 ### **Documentação:**
 - **`README.md`** - Documentação completa do projeto
-- **`roteiro.txt`** - Roteiro de desenvolvimento/notas
+- **`roteiro.txt`** - Roteiro de desenvolvimento/notas (ainda não foi colocado)
 
 ---
 
