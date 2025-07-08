@@ -21,11 +21,11 @@ Configuração das dependências do projeto
 Inicialização do servidor Django
 Primeiro contato com a aplicação
 
-🔗 Link do Vídeo: [Inserir link aqui]
+🔗 Link do Vídeo: [https://youtu.be/0zDkQuzpNgs]
 
-📹 Vídeo 2: Estrutura Django e Plataforma do Mentor
+📹 Vídeo 2: Estrutura Django e Plataforma do Mentor 
 
-Foco: Explicação da estrutura Django + Demonstração da interface do mentor
+Foco: Mostrar a lógica por trás do Django e como ela se aplica a projetos completos com diversas funcionalidades.
 
 Conteúdo abordado:
 
@@ -36,7 +36,7 @@ Conexão entre views, templates e models
 Demonstração prática da plataforma do mentor
 Lógica por trás da arquitetura Django aplicada ao projeto
 
-🔗 Link do Vídeo: [Inserir link aqui]
+🔗 Link do Vídeo: [https://youtu.be/XmU2XyDA5gU]
 
 📹 Vídeo 3: Código e Funcionalidades na Prática
 
