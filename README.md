@@ -8,10 +8,51 @@
 
 O **MentorBook** é uma plataforma web construída com Django que conecta mentores a mentorados, permitindo o gerenciamento de tarefas, vídeos, agendamento de reuniões e interação com uma inteligência artificial (IA) para suporte educacional.
 
-## 🎥 Demonstração
-![Screenshot da Dashboard](screenshots/dashboard.png)
-- [Demo ao vivo](https://mentorbook-demo.herokuapp.com) (se disponível)
-- [Vídeo demonstrativo](https://youtube.com/watch?v=exemplo)
+🎬 Vídeos Demonstrativos
+📹 Vídeo 1: Apresentação e Configuração Inicial
+
+Foco: Apresentação do projeto + Instalação do ambiente virtual e servidor
+
+Conteúdo abordado:
+
+Apresentação geral do projeto MentorBook
+Instalação e configuração do ambiente virtual Python
+Configuração das dependências do projeto
+Inicialização do servidor Django
+Primeiro contato com a aplicação
+
+🔗 Link do Vídeo: [Inserir link aqui]
+
+📹 Vídeo 2: Estrutura Django e Plataforma do Mentor
+
+Foco: Explicação da estrutura Django + Demonstração da interface do mentor
+
+Conteúdo abordado:
+
+Estrutura completa de um projeto Django
+Criação e organização de apps Django
+Sistema de roteamento e definição de URLs
+Conexão entre views, templates e models
+Demonstração prática da plataforma do mentor
+Lógica por trás da arquitetura Django aplicada ao projeto
+
+🔗 Link do Vídeo: [Inserir link aqui]
+
+📹 Vídeo 3: Código e Funcionalidades na Prática
+
+Foco: Demonstração técnica do código + Funcionalidades visuais da plataforma
+
+Conteúdo abordado:
+
+Análise detalhada do código-fonte
+Explicação das funcionalidades implementadas
+Demonstração visual das páginas da aplicação
+Como o sistema funciona na prática
+Interface do mentorado e do mentor
+Funcionalidades de IA, tarefas, vídeos e reuniões
+Fluxo completo de uso da plataforma
+
+🔗 Link do Vídeo: [Inserir link aqui]
 
 ## ⚡ Quick Start
 ```bash
