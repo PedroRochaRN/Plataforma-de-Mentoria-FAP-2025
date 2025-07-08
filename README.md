@@ -1,8 +1,27 @@
 # MentorBook - Plataforma de Mentoria com IA
 
+[![Django](https://img.shields.io/badge/Django-5.0-green.svg)](https://djangoproject.com)
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 ## 📌 Visão Geral
 
 O **MentorBook** é uma plataforma web construída com Django que conecta mentores a mentorados, permitindo o gerenciamento de tarefas, vídeos, agendamento de reuniões e interação com uma inteligência artificial (IA) para suporte educacional.
+
+## 🎥 Demonstração
+![Screenshot da Dashboard](screenshots/dashboard.png)
+- [Demo ao vivo](https://mentorbook-demo.herokuapp.com) (se disponível)
+- [Vídeo demonstrativo](https://youtube.com/watch?v=exemplo)
+
+## ⚡ Quick Start
+```bash
+git clone https://github.com/seu-usuario/mentorbook.git
+cd mentorbook
+pip install -r requirements.txt
+cp .env.example .env  # Configure sua GEMINI_API_KEY
+python manage.py migrate
+python manage.py runserver
+```
 
 ---
 
@@ -115,7 +134,7 @@ mentorbook/
 
 ### **Documentação:**
 - **`README.md`** - Documentação completa do projeto
-- **`roteiro.txt`** - Roteiro de desenvolvimento/notas (ainda não foi colocado)
+- **`roteiro.txt`** - Roteiro de desenvolvimento/notas
 
 ---
 
@@ -578,6 +597,25 @@ python manage.py dbshell
 
 ---
 
+## 🔧 Problemas Comuns
+
+### **Erros de Configuração:**
+- **Erro de API Key**: Verifique se o `GEMINI_API_KEY` está correto no arquivo `.env`
+- **Arquivo .env não encontrado**: Certifique-se de criar o arquivo `.env` na raiz do projeto
+- **Erro de migração**: Execute `python manage.py migrate --run-syncdb`
+
+### **Problemas de Dependências:**
+- **Erro de importação**: Verifique se todas as dependências foram instaladas com `pip install -r requirements.txt`
+- **Versão do Python**: Certifique-se de usar Python 3.8+ 
+- **Ambiente virtual**: Ative o ambiente virtual antes de instalar as dependências
+
+### **Problemas de Mídia:**
+- **Arquivos estáticos**: Execute `python manage.py collectstatic` se necessário
+- **Upload de arquivos**: Verifique se a pasta `media/` tem permissões de escrita
+- **Vídeos não carregam**: Verifique se o arquivo está no formato correto
+
+---
+
 ## 📦 Dependências Principais
 
 ```txt
@@ -636,14 +674,16 @@ Pillow>=10.0.0
 
 ---
 
-## 📞 Suporte e Contribuição
+## 🤝 Como Contribuir
 
-### **Estrutura de Contribuição:**
-1. Fork do projeto
-2. Criar branch para feature (`git checkout -b feature/nova-funcionalidade`)
-3. Commit das mudanças (`git commit -m 'Adiciona nova funcionalidade'`)
-4. Push para branch (`git push origin feature/nova-funcionalidade`)
-5. Abrir Pull Request
+### **Processo de Contribuição:**
+1. Veja as [issues abertas](https://github.com/seu-usuario/mentorbook/issues)
+2. Escolha uma issue ou proponha uma nova funcionalidade
+3. Faça um fork do projeto
+4. Criar branch para feature (`git checkout -b feature/nova-funcionalidade`)
+5. Commit das mudanças (`git commit -m 'Adiciona nova funcionalidade'`)
+6. Push para branch (`git push origin feature/nova-funcionalidade`)
+7. Abrir Pull Request
 
 ### **Padrões de Código:**
 - **PEP 8:** Seguir padrões Python
@@ -651,14 +691,21 @@ Pillow>=10.0.0
 - **Testes:** Adicionar testes para novas funcionalidades
 - **Segurança:** Validar todos os inputs de usuário
 
+### **Tipos de Contribuição:**
+- 🐛 **Bug fixes** - Correção de bugs
+- ✨ **Features** - Novas funcionalidades
+- 📚 **Documentação** - Melhorias na documentação
+- 🎨 **UI/UX** - Melhorias na interface
+- 🔧 **Refatoração** - Otimização de código
+
 ---
 
-**📎 Desenvolvido com Django 5 + Google Gemini AI**  
-*Plataforma completa para mentoria educacional com inteligência artificial*
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para detalhes.
 
 ---
 
 ## 👨‍💻 Autor
 
-**Pedro Vinícius Rosário Rocha**  
-*Desenvolvedor Full Stack*
+**Pedro Vinícius Rosário Rosário Rocha
