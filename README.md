@@ -52,7 +52,7 @@ Interface do mentorado e do mentor
 Funcionalidades de IA, tarefas, vídeos e reuniões
 Fluxo completo de uso da plataforma
 
-🔗 Link do Vídeo: [Inserir link aqui]
+🔗 Link do Vídeo: [https://youtu.be/G85XWWSLiGE]
 
 ## ⚡ Quick Start
 ```bash
